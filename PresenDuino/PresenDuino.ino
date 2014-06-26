@@ -1,7 +1,9 @@
 #include <LiquidCrystal.h>
+#include <SoftwareSerial.h>
 
 // initialize the library with the numbers of the interface pins
 LiquidCrystal lcd(12, 11, 7, 6, 5, 4);
+SoftwareSerial mySerial(8, 9); // RX, TX
 
 byte heart[8] = {
   0b00000,
@@ -49,6 +51,12 @@ void setup() {
   attachInterrupt(0, changeCountDownState, RISING);
   attachInterrupt(1, incTime, RISING);
   
+  Serial.begin(57600);
+  while (!Serial) {
+    ; // wait for serial port to connect. Needed for Leonardo only
+  }
+  mySerial.begin(19200);
+  
   // Delay in mil sec, so that we can read
   delay(2500);
   
@@ -73,14 +81,22 @@ void loop() {
     if(timeSec > 0){
       digitalWrite(redLed, LOW);
       digitalWrite(greenLed, HIGH);
+      
       if(timeSec < 10){
+        
+        mySerial.println('4');
+        Serial.println("Sent '4' to Signal Side");
+        
         for(int i=0; i<3; i++){
           digitalWrite(yellowLed, HIGH);
           delay(150);
           digitalWrite(yellowLed, LOW);
           delay(150);
         }
+        
       }else{
+        mySerial.println('1');
+        Serial.println("Sent '1' to Signal Side");
         delay(900);
       }
       timeSec--;
@@ -88,12 +104,18 @@ void loop() {
     }else{
       digitalWrite(redLed, HIGH);
       digitalWrite(greenLed, LOW);
+      
+      mySerial.println('3');
+      Serial.println("Sent '3' to Signal Side");
+      
       countDownState = LOW;
       timeSec = maxTimeSec;
       timeSecDone = 0;
     }
   }else{
     
+      mySerial.println('3');
+      Serial.println("Sent '3' to Signal Side");
   }
   delay(100);
 }

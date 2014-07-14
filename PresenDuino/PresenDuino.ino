@@ -1,3 +1,13 @@
+/*
+PresenDuino assists in clocking time while you're presenting. It sends the current 
+state to SignalSide, which lights up the LEDs respectively.
+Uses:
+  Arduino UNO
+  Xbee series 1
+  2 Switches
+  LCD
+*/
+
 #include <LiquidCrystal.h>
 #include <SoftwareSerial.h>
 

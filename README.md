@@ -9,4 +9,4 @@ SignalSide
 ![image](/Images/DSC_0164.jpg)
 
 ##Links
-http://www.ladyada.net/make/xbee/ref.html
+Setup two Xbees - http://www.ladyada.net/make/xbee/ref.html
